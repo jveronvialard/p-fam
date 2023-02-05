@@ -1,0 +1,6 @@
+lr: 0.02
+momentum: 0.9
+num_classes: 17930
+seq_max_len: 128
+vocab_size: 22
+weight_decay: 0.0

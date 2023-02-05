@@ -70,6 +70,17 @@ Unit testing
 ```shell script
 pytest tests
 ```
+## Best Performing Model
+Test accuracy: 0.969. Obtained after 14 epochs (early stopping at epoch=17 after no improvement of validation accuracy).
+![alt text](train_loss_step_and_valid_acc.png "")
+```
+Rare AAs: B, O, U, X and Z
+lr: 0.02
+momentum: 0.9
+seq_max_len: 128
+weight_decay: 0.0
+batch_size: 1024
+```
 ## Project Structure
 ```
 project
