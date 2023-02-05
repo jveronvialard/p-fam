@@ -28,6 +28,25 @@ to ensure consistent tracking and flexibility.
 ML experiments are stored as sub folders "experiment_name" inside a folder "experiment_path". If an
 "experiment_name" already exist, its data processing files are loaded, else they are generated and saved.
 Each training is tracked and saved in a version_X (X is incremented) sub folder inside "experiment_name".
+## Docker
+Environment setup
+```shell script
+docker build -t docker-pfam-model -f Dockerfile .
+```
+Model training (only experiment_path, experiment_name and data_dir are required)
+```shell script
+docker run docker-pfam-model python train.py --experiment_path ./experiments/ --experiment_name BOUXZ --data_dir ./data/random_split --partition train --rare_AAs B,O,U,X,Z --seq_max_len 120 --batch_size 1024 --lr 1e-2 --momentum 0.9 --weight_decay 1e-2 --num_workers 0 --gpus 0 --epochs 1
+```
+After having trained a model: model testing (only experiment_path, experiment_name and experiment_checkpoint are 
+required) and prediction (all arguments required)
+```shell script
+docker run docker-pfam-model python test.py --experiment_path ./experiments/ --experiment_name BOUXZ --experiment_checkpoint version_0/epoch=14-step=15929.ckpt --batch_size 1024 --num_workers 0 --gpus 0
+docker run docker-pfam-model python predict.py --sequence LLQKKIRVRPNRAQLVQRHILDDT --experiment_path ./experiments/ --experiment_name BOUXZ --experiment_checkpoint version_0/epoch=14-step=15929.ckpt
+```
+Unit testing
+```shell script
+docker run docker-pfam-model pytest tests
+```
 ## Local
 Environment setup
 ```shell script
