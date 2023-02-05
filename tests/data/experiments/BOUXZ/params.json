@@ -1,0 +1,1 @@
+{"data_path": "./data/random_split", "partition": "train", "rare_AAs": ["B", "O", "U", "X", "Z"]}
