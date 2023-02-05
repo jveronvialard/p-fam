@@ -1,0 +1,8 @@
+*.ipynb
+*.pdf
+.idea
+pfam.egg-info/
+*/__pycache__/
+__pycache__/
+data/random_split
+experiments
