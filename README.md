@@ -40,3 +40,64 @@ Model training (only experiment_path, experiment_name and data_dir are required)
 ```shell script
 python train.py --experiment_path ./experiments/ --experiment_name BOUXZ --data_dir ./data/random_split --partition train --rare_AAs B,O,U,X,Z --seq_max_len 120 --batch_size 1024 --lr 1e-2 --momentum 0.9 --weight_decay 1e-2 --num_workers 0 --gpus 1 --epochs 1
 ```
+After having trained a model: model testing (only experiment_path, experiment_name and experiment_checkpoint are 
+required), model prediction (all arguments required), and tensorboard visualization
+```shell script
+python test.py --experiment_path ./experiments/ --experiment_name BOUXZ --experiment_checkpoint version_0/epoch=14-step=15929.ckpt --batch_size 1024 --num_workers 0 --gpus 1
+python predict.py --sequence LLQKKIRVRPNRAQLVQRHILDDT --experiment_path ./experiments/ --experiment_name BOUXZ --experiment_checkpoint version_0/epoch=14-step=15929.ckpt
+tensorboard --logdir ./experiments/BOUXZ/version_0
+```
+Unit testing
+```shell script
+pytest tests
+```
+## Project Structure
+```
+project
+│   .gitignore
+│   Dockerfile
+│   predict.py
+│   README.md
+│   requirements.txt
+│   setup.py
+│   test.py
+│   train.py
+└───data
+│   └───random_split
+│   |   └───dev
+│   |   |   |   ...
+│   |   └───test
+│   |   |   |   ...
+│   |   └───train
+│   |   |   |   ...
+└───experiments
+│   └───BOUXZ
+│   │   |   fam2label.json
+│   │   |   label2fam.json
+│   │   |   params.json
+│   │   |   word2id.json
+│   |   └───version_0
+│   |   |   |   epoch=14-step=15929.ckpt
+│   |   |   |   events.out.tfevents
+│   |   |   |   hparams.yaml
+│   |   |   |   train_params.json
+└───pfam
+│   │   dataset.py
+│   │   experiment.py
+│   │   model.py
+│   │   utils.py
+└───tests
+│   │   __init__.py
+│   │   conftest.py
+│   └───data
+│   |   └───experiments
+│   |   |   └───BOUXZ
+│   |   └───random_split
+│   |   |   └───train
+│   └───pfam
+│       │   __init__.py
+│       │   test_dataset.py
+│       │   test_experiment.py
+│       │   test_model.py
+│       │   test_utils.py
+```
